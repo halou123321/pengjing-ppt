@@ -1,0 +1,555 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"></head><body class="motion-ready low-power">
+<meta charset="utf-8">
+
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>彭晶 · 中国十佳时装设计师</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,700&amp;family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,400&amp;family=IBM+Plex+Mono:wght@300;400;500;600&amp;family=Noto+Serif+SC:wght@300;400;500;600;700;900&amp;family=Noto+Sans+SC:wght@300;400;500;700;900&amp;display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0a0a0b;
+    --ink-rgb:10,10,11;
+    --paper:#f1efea;
+    --paper-rgb:241,239,234;
+    --paper-tint:#e8e5de;
+    --ink-tint:#18181a;
+    --mono:"IBM Plex Mono",ui-monospace,monospace;
+    --serif-en:"Playfair Display","Source Serif 4",Georgia,serif;
+    --serif-body-en:"Source Serif 4",Georgia,serif;
+    --serif-zh:"Noto Serif SC",serif;
+    --sans-zh:"Noto Sans SC",sans-serif;
+    --slide-w:1920px;
+    --slide-h:1080px;
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0}
+
+  /* === VIEWPORT SCALING === */
+  .deck-viewport{position:fixed;inset:0;overflow:hidden;background:#000}
+  .deck-stage{position:absolute;left:0;top:0;width:1920px;height:1080px;overflow:hidden;transform-origin:0 0;background:var(--ink)}
+
+  html,body{width:100%;height:100%;overflow:hidden;background:#000;font-family:var(--sans-zh);-webkit-font-smoothing:antialiased}
+
+  /* === SLIDE === */
+  #deck{position:absolute;inset:0;display:flex;flex-wrap:nowrap;transition:transform .9s cubic-bezier(.77,0,.175,1);z-index:10;will-change:transform}
+  .slide{width:1920px;height:1080px;flex:0 0 1920px;position:relative;padding:72px 96px 72px 96px;display:flex;flex-direction:column;overflow:hidden}
+  .slide.light{color:var(--ink);background:var(--paper)}
+  .slide.dark{color:var(--paper);background:var(--ink)}
+
+  /* Backdrop blur */
+  .slide::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none}
+  .slidelight::before{background:rgba(var(--paper-rgb),.78);backdrop-filter:blur(3px)}
+  .slidedark::before{background:rgba(var(--ink-rgb),.78);backdrop-filter:blur(3px)}
+  .slide.hero::before{background:rgba(var(--ink-rgb),.12);backdrop-filter:none}
+  .slide.hero::after{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(180deg,rgba(var(--ink-rgb),.32) 0%,rgba(var(--ink-rgb),0) 14%,rgba(var(--ink-rgb),0) 86%,rgba(var(--ink-rgb),.32) 100%)}
+
+  /* === CHROME & FOOT === */
+  .chrome{display:flex;justify-content:space-between;align-items:flex-start;font-family:var(--mono);font-size:13px;letter-spacing:.18em;text-transform:uppercase;opacity:.65;margin-bottom:8px}
+  .foot{margin-top:auto;display:flex;justify-content:space-between;align-items:flex-end;font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;opacity:.5}
+  .frame{flex:1;display:flex;flex-direction:column;min-height:0;overflow-y:auto;overflow-x:hidden}
+
+  /* === TYPOGRAPHY === */
+  .kicker{font-family:var(--mono);font-size:13px;letter-spacing:.3em;text-transform:uppercase;opacity:.55;margin-bottom:24px}
+  .h-hero{font-family:var(--serif-zh);font-weight:900;font-size:160px;line-height:.96;letter-spacing:-.02em}
+  .h-xl{font-family:var(--serif-zh);font-weight:700;font-size:88px;line-height:1.08;letter-spacing:-.01em}
+  .p-lead{font-family:var(--serif-zh);font-weight:400;font-size:34px;line-height:1.5;opacity:.86}
+  .p-body{font-family:var(--sans-zh);font-weight:400;font-size:22px;line-height:1.65;opacity:.78}
+  .meta-row{display:flex;gap:1.2em;align-items:baseline;flex-wrap:wrap;font-family:var(--mono);font-size:16px;letter-spacing:.16em;text-transform:uppercase;opacity:.55}
+
+  /* === CALLOUT === */
+  .callout{padding:28px 24px;border-left:3px solid currentColor;font-family:var(--serif-zh);font-size:22px;line-height:1.55;opacity:.92}
+  .slide.light .callout{background:rgba(var(--ink-rgb),.05)}
+  .slide.dark .callout{background:rgba(var(--paper-rgb),.06)}
+  .callout-src{display:block;margin-top:16px;font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;opacity:.55}
+
+  /* === IMAGE SLOTS === */
+  .img-slot{border:1.5px dashed rgba(127,127,127,.4);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;padding:24px;font-family:var(--mono);font-size:11px;letter-spacing:.28em;text-transform:uppercase;opacity:.55;position:relative;width:100%;box-sizing:border-box}
+  .img-slot::before{content:"";position:absolute;inset:8px;border:1px solid currentColor;opacity:.2}
+  .img-slot .plus{font-size:28px;font-weight:300;opacity:.5;letter-spacing:0}
+  .img-slot .label{position:relative;z-index:2;text-align:center}
+  .img-box{display:flex;flex-direction:column;align-items:center;width:100%}
+  .img-card{display:flex;flex-direction:column;align-items:center;gap:6px;width:100%}
+  .img-cap{font-family:var(--mono);font-size:11px;letter-spacing:.22em;text-transform:uppercase;opacity:.55;margin-top:6px;text-align:center}
+  .frame-img > img{width:100%;height:100%;object-fit:cover;display:block}
+
+  /* === LAYOUTS === */
+  .cover-center{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;gap:32px}
+  .split-2{display:grid;grid-template-columns:1fr 1fr;align-items:start;flex:1}
+  .flex-col{display:flex;flex-direction:column}
+  .grid-6{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;flex:1;align-content:start}
+  .grid-4-img{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+  .brands-row{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;width:100%}
+  .pipeline-4{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+
+  /* === COMPONENTS === */
+  .info-card{padding:20px 24px;background:rgba(var(--ink-rgb),.03);border:1px solid rgba(127,127,127,.14)}
+  .slide.dark .info-card{background:rgba(var(--paper-rgb),.04)}
+  .ic-label{font-family:var(--mono);font-size:11px;letter-spacing:.24em;text-transform:uppercase;opacity:.45;margin-bottom:8px}
+  .ic-text{font-size:20px;line-height:1.6;opacity:.78}
+
+  .world-card{padding:28px;border-left:3px solid currentColor}
+  .world-label{font-family:var(--mono);font-size:12px;letter-spacing:.22em;text-transform:uppercase;opacity:.55;margin-bottom:12px}
+  .world-title{font-family:var(--serif-zh);font-weight:600;font-size:38px;line-height:1.3;margin-bottom:12px}
+  .world-desc{font-size:20px;line-height:1.65;opacity:.75}
+
+  .brand-card{display:flex;flex-direction:column;align-items:center;text-align:center;gap:12px;padding:36px 32px;border:1px solid rgba(127,127,127,.15)}
+  .brand-icon{font-family:var(--serif-en);font-style:italic;font-size:48px;opacity:.3}
+  .brand-name{font-family:var(--serif-zh);font-weight:700;font-size:40px;line-height:1.2}
+  .brand-role{font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;opacity:.45}
+  .brand-desc{font-size:18px;line-height:1.6;opacity:.65;max-width:360px}
+
+  .step{display:flex;flex-direction:column;gap:10px;padding-top:16px;border-top:1px solid rgba(127,127,127,.3)}
+  .step-nb{font-family:var(--serif-en);font-style:italic;font-size:18px;opacity:.4}
+  .step-title{font-family:var(--serif-zh);font-weight:700;font-size:26px;line-height:1.2}
+  .step-desc{font-size:16px;line-height:1.5;opacity:.7}
+
+  /* === NAV === */
+  #nav{position:fixed;left:50%;bottom:28px;transform:translateX(-50%);z-index:30;display:flex;gap:10px;padding:8px 14px;border-radius:999px;background:rgba(0,0,0,.18);backdrop-filter:blur(10px)}
+  #nav .dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.3);cursor:pointer;transition:all .3s ease;border:0;padding:0}
+  #nav .dot:hover{background:rgba(255,255,255,.5);transform:scale(1.15)}
+  #nav .dot.active{background:rgba(255,255,255,.95);width:22px;border-radius:999px}
+  #hint{position:fixed;bottom:32px;right:58px;z-index:30;font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;opacity:.4;color:#aaa}
+
+  /* === ANIMATIONS === */
+  [data-anim]{opacity:1}
+  body.motion-ready [data-anim]{opacity:0}
+  body.motion-ready [data-anim="left"]{transform:translateX(-24px)}
+  body.motion-ready [data-anim="right"]{transform:translateX(24px)}
+  body.low-power [data-anim]{opacity:1!important;transform:none!important}
+
+  @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:0.01ms!important;transition-duration:0.2s!important}}
+</style>
+
+
+
+<canvas id="bg-dark" class="bg" style="position:fixed;inset:0;width:100%;height:100%;z-index:0;display:block" width="2744" height="1252"></canvas>
+<div id="hint">← → 翻页 · B 动态 · ESC 索引</div>
+
+<div class="deck-viewport"><div class="deck-stage" style="transform: translate(129.556px, 0px) scale(0.57963);"><div id="deck" style="width: 26880px; transform: translateX(-5760px);">
+
+<!-- P01 -->
+<section class="slide dark hero">
+  <div class="chrome"><div>设计师档案 · 2026</div><div>01 / 14</div></div>
+  <div class="frame"><div class="cover-center">
+  <div class="kicker" data-anim="" style="transform: none; opacity: 1;">中国十佳时装设计师</div>
+  <h1 class="h-hero" data-anim="" style="transform: none; opacity: 1;">彭晶</h1>
+  <p class="p-lead" style="max-width: 960px; transform: none; opacity: 1;" data-anim="">从一线明星的高定婚纱，到属于中国女性自己的黑裙和肖像摄影——用二十年，做一件事：帮每个女性找到属于自己的表达。</p>
+  <div class="meta-row" data-anim="" style="transform: none; opacity: 1;"><span>深鹤 · 莲俏 联合创始人</span></div>
+</div></div>
+  <div class="foot"><div>Peng Jing</div><div>Vol.01</div></div>
+</section>
+<!-- P02 -->
+<section class="slide light">
+  <div class="chrome"><div>基础信息 · Profile</div><div>02 / 14</div></div>
+  <div class="frame"><div class="split-2" style="gap:64px">
+  <div class="flex-col" style="gap:28px">
+    <div class="kicker" data-anim="" style="opacity: 1; transform: none;">About</div>
+    <h2 class="h-xl" data-anim="" style="opacity: 1; transform: none;">彭晶是谁？</h2>
+    <div class="info-card" data-anim="" style="opacity: 1; transform: none;"><div class="ic-label">教育背景</div><div class="ic-text">自幼学习美术。本科毕业于天津工业大学艺术设计学院。师从中国服装设计大师、中国美术学院教授吴海燕。</div></div>
+    <div class="info-card" data-anim="" style="opacity: 1; transform: none;"><div class="ic-label">行业荣誉</div><div class="ic-text">中国十佳时装设计师（2013）· 中国服装设计师协会艺术家委员会委员 · 深圳市龙华区高层次人才（2021）</div></div>
+    <div class="info-card" data-anim="" style="opacity: 1; transform: none;"><div class="ic-label">品牌身份</div><div class="ic-text">高定黑裙品牌「深鹤」创始人 &amp; 设计总监 · 肖像摄影品牌「莲俏」联合创始人</div></div>
+    <div class="info-card" data-anim="" style="opacity: 1; transform: none;"><div class="ic-label">著作</div><div class="ic-text">出版《时尚视觉盛宴——婚纱插画》等服装设计专业书籍。在多所高校和机构担任客座讲师。</div></div>
+  </div>
+  <div class="img-box" data-anim="" style="opacity: 1; transform: none;"><img src="assets/2-1.jpg" class="" style="aspect-ratio: 3 / 4; max-height: 780px; width: 832px; object-fit: cover;"><div class="img-cap">Peng Jing · At Work</div></div>
+</div></div>
+  <div class="foot"><div>Page 02 · Profile</div><div>Peng Jing</div></div>
+</section>
+<!-- P03 -->
+<section class="slide dark hero">
+  <div class="chrome"><div>第一幕 · 深白时代</div><div>03 / 14</div></div>
+  <div class="frame"><div class="cover-center">
+  <div class="kicker" data-anim="" style="opacity: 1; transform: none;">Shenbai Era · 2008–2018</div>
+  <h1 class="h-hero" style="font-size: 140px; opacity: 1; transform: none;" data-anim="">中国一线<br>婚纱礼服品牌<br>的缔造者</h1>
+  <p class="p-lead" style="max-width: 860px; opacity: 1; transform: none;" data-anim="">从自己的婚礼到赵丽颖的金鹰战袍——她用十年，让东方女性的美在最重要的时刻被看见。</p>
+</div></div>
+  <div class="foot"><div>第一幕 · 深白时代</div><div>— · —</div></div>
+</section>
+<!-- P04 -->
+<section class="slide dark">
+  <div class="chrome"><div>深白 · Celebrities</div><div>04 / 14</div></div>
+  <div class="frame"><div class="flex-col" style="gap:24px">
+  <div>
+    <div class="kicker" data-anim="" style="opacity: 1; transform: none;">Clients · 服务过的一线明星</div>
+    <h2 class="h-xl" style="font-size: 72px; opacity: 1; transform: none;" data-anim="">她们人生最重要的时刻<br>穿的是彭晶的设计</h2>
+  </div>
+  <div class="grid-6">
+    <div class="img-card" data-anim="" style="opacity: 1; transform: none;"><img src="assets/4-1.jpg" class="" style="aspect-ratio: 2 / 3; max-height: 290px; width: 560px; object-fit: cover;"><div class="img-cap">凤凰传奇 · 曾毅</div></div>
+    <div class="img-card" data-anim="" style="opacity: 1; transform: none;"><img src="assets/4-2.jpg" class="" style="aspect-ratio: 2 / 3; max-height: 290px; width: 560px; object-fit: cover;"><div class="img-cap">钟丽缇 · 婚礼</div></div>
+    <div class="img-card" data-anim="" style="opacity: 1; transform: none;"><img src="assets/4-3.jpg" class="" style="aspect-ratio: 2 / 3; max-height: 290px; width: 560px; object-fit: cover;"><div class="img-cap">刘璇 · 婚礼</div></div>
+    <div class="img-card" data-anim="" style="opacity: 1; transform: none;"><img src="assets/4-4.jpg" class="" style="aspect-ratio: 2 / 3; max-height: 290px; width: 560px; object-fit: cover;"><div class="img-cap">聂远、秦子越· 婚礼</div></div>
+    <div class="img-card" data-anim="" style="opacity: 1; transform: none;"><img src="assets/4-5.jpg" class="" style="aspect-ratio: 2 / 3; max-height: 290px; width: 560px; object-fit: cover;"><div class="img-cap">晴岚 · 婚纱</div></div>
+    <div class="img-card" data-anim="" style="opacity: 1; transform: none;"><img src="assets/4-6.jpg" class="" style="aspect-ratio: 2 / 3; max-height: 290px; width: 560px; object-fit: cover;"><div class="img-cap">严屹宽 &amp; 杜若溪 · 婚礼</div></div>
+  </div>
+</div></div>
+  <div class="foot"><div>Page 04 · 明星客户</div><div>Celebrities</div></div>
+</section>
+<!-- P05 -->
+<section class="slide light">
+  <div class="chrome"><div>深白 · Awards</div><div>05 / 14</div></div>
+  <div class="frame"><div class="split-2" style="gap:64px">
+  <div class="flex-col" style="gap:20px">
+    <div>
+      <div class="kicker" data-anim="" style="transform: none; opacity: 1;">TV &amp; Stage · 电视台与舞台</div>
+      <h2 class="h-xl" style="font-size: 72px; transform: none; opacity: 1;" data-anim="">从春晚到金鹰节<br>为舞台而生</h2>
+    </div>
+    <div class="info-card" data-anim="" style="transform: none; opacity: 1;"><div class="ic-label">央视春晚</div><div class="ic-text">为主持人李思思定制礼服</div></div>
+    <div class="info-card" data-anim="" style="transform: none; opacity: 1;"><div class="ic-label">湖南卫视金鹰节</div><div class="ic-text">连续两届金鹰女神礼服设计师（国内唯一）</div></div>
+    <div class="info-card" data-anim="" style="transform: none; opacity: 1;"><div class="ic-label">央视《时尚大师》</div><div class="ic-text">参赛设计师</div></div>
+    <div class="info-card" data-anim="" style="transform: none; opacity: 1;"><div class="ic-label">多家卫视</div><div class="ic-text">湖南卫视、江苏卫视等春晚及大型晚会服装设计制作</div></div>
+    <div class="info-card" data-anim="" style="transform: none; opacity: 1;"><div class="ic-label">成都大运会</div><div class="ic-text">2022年汉服系列设计</div></div>
+  </div>
+  <div class="flex-col" style="gap:24px">
+    <div class="img-box" data-anim="" style="transform: none; opacity: 1;"><img src="assets/5-1.jpg" class="" style="aspect-ratio: 4 / 3; max-height: 440px; width: 832px; object-fit: cover;"><div class="img-cap">CCTV · 春晚舞台</div></div>
+    <div class="callout" data-anim="" style="transform: none; opacity: 1;">中国十佳时装设计师（2013）· 中国国际时装周个人专场 · 亚洲最具影响力的婚纱设计师<div class="callout-src">— 部分荣誉</div></div>
+  </div>
+</div></div>
+  <div class="foot"><div>Page 05 · 荣誉与舞台</div><div>Awards &amp; Stage</div></div>
+</section>
+<!-- P06 -->
+<section class="slide dark hero">
+  <div class="chrome"><div>转折 · Turning Point</div><div>06 / 14</div></div>
+  <div class="frame"><div class="cover-center">
+  <div class="kicker" data-anim="" style="opacity: 1; transform: none;">从"耀眼"到"留白"</div>
+  <h1 class="h-hero" style="font-size: 130px; opacity: 1; transform: none;" data-anim="">这些衣服<br>普通人什么时候能穿？</h1>
+  <p class="p-lead" style="max-width: 960px; opacity: 1; transform: none;" data-anim="">婚纱追求的是西方美学的极致华丽。服务了十年明星与舞台之后，她想回到大众身边——做减法，做真正适合中国女性的衣服。</p>
+  <p class="p-lead" style="max-width: 960px; opacity: 1; transform: none;" data-anim="">2018 年，告别深白，从零开始。</p>
+</div></div>
+  <div class="foot"><div>转折 · 2018</div><div>From West to East</div></div>
+</section>
+<!-- P07 -->
+<section class="slide dark hero">
+  <div class="chrome"><div>第二幕 · 深鹤</div><div>07 / 14</div></div>
+  <div class="frame"><div class="cover-center">
+  <div class="kicker" data-anim="" style="opacity: 1; transform: none;">Shenhe · 2021–</div>
+  <h1 class="h-hero" style="font-size: 140px; opacity: 1; transform: none;" data-anim="">一条为中国女性<br>打磨了六年的<br>高定黑裙</h1>
+</div></div>
+  <div class="foot"><div>第二幕 · 深鹤</div><div>— · —</div></div>
+</section>
+<!-- P08 -->
+<section class="slide dark">
+  <div class="chrome"><div>深鹤 · Philosophy</div><div>08 / 14</div></div>
+  <div class="frame"><div class="flex-col" style="flex:1;gap:0">
+  <div>
+    <div class="kicker" data-anim="" style="opacity: 1; transform: none;">Design Philosophy · 设计理念</div>
+    <h2 class="h-xl" style="font-size: 72px; margin-bottom: 40px; opacity: 1; transform: none;" data-anim="">不露 · 留白 · 气韵 · 分寸感</h2>
+  </div>
+  <div class="grid-4-img" style="margin-top:60px">
+    <div class="img-card" data-anim="" style="opacity: 1; transform: none;"><img src="assets/8-1-1.jpg" class="" style="aspect-ratio: 3 / 2; max-height: 340px; width: 414px; object-fit: cover;"><div class="img-cap">不露 · 领口设计</div></div>
+    <div class="img-card" data-anim="" style="opacity: 1; transform: none;"><img src="assets/8-2-2.jpg" class="" style="aspect-ratio: 3 / 2; max-height: 340px; width: 414px; object-fit: cover;"><div class="img-cap">留白 · 不堆砌装饰</div></div>
+    <div class="img-card" data-anim="" style="opacity: 1; transform: none;"><img src="assets/8-3-2.jpg" class="" style="aspect-ratio: 3 / 2; max-height: 340px; width: 414px; object-fit: cover;"><div class="img-cap">气韵 · 流动的贴合</div></div>
+    <div class="img-card" data-anim="" style="opacity: 1; transform: none;"><img src="assets/8-4.jpg" class="" style="aspect-ratio: 3 / 2; max-height: 340px; width: 414px; object-fit: cover;"><div class="img-cap">分寸感 · 裙摆弧度</div></div>
+  </div>
+  <div class="callout" data-anim="" style="margin-top: auto; margin-bottom: 60px; opacity: 1; transform: none;">"这条黑裙是我这辈子设计时间最长的一件衣服，同时也是看起来最简单的一件。"<div class="callout-src">— 彭晶</div></div>
+</div></div>
+  <div class="foot"><div>Page 08 · 设计理念</div><div>Philosophy</div></div>
+</section>
+<!-- P09 -->
+<section class="slide light">
+  <div class="chrome"><div>深鹤 · Process</div><div>09 / 14</div></div>
+  <div class="frame"><div class="flex-col" style="gap:40px">
+  <div>
+    <div class="kicker" data-anim="" style="opacity: 1; transform: none;">Six Years · 六年的打磨</div>
+    <h2 class="h-xl" style="font-size: 72px; opacity: 1; transform: none;" data-anim="">2018 → 2024</h2>
+  </div>
+  <div class="pipeline-4">
+    <div class="step" data-anim="" style="opacity: 1; transform: none;"><div class="step-nb">01</div><div class="step-title">版型研究</div><div class="step-desc">反复调整肩线、胸腰比例、背部弧度，只为中国女性身型</div></div>
+    <div class="step" data-anim="" style="opacity: 1; transform: none;"><div class="step-nb">02</div><div class="step-title">面料甄选</div><div class="step-desc">测试上百种面料，兼顾垂坠感、挺括度与亲肤体感</div></div>
+    <div class="step" data-anim="" style="opacity: 1; transform: none;"><div class="step-nb">03</div><div class="step-title">工艺打磨</div><div class="step-desc">缝线密度、里衬结构、每一个接缝和收边反复优化</div></div>
+    <div class="step" data-anim="" style="opacity: 1; transform: none;"><div class="step-nb">04</div><div class="step-title">真人试穿</div><div class="step-desc">不同身型、不同体态反复试穿，直到每个人穿上都"对"</div></div>
+  </div>
+  <div class="grid-4-img" style="margin-top:8px">
+    <div class="img-card" data-anim="" style="opacity: 1; transform: none;"><img src="assets/9-1.jpg" class="" style="aspect-ratio: 3 / 4; max-height: 280px; width: 414px; object-fit: cover;"><div class="img-cap">手稿</div></div>
+    <div class="img-card" data-anim="" style="opacity: 1; transform: none;"><img src="assets/9-2.jpg" class="" style="aspect-ratio: 3 / 4; max-height: 280px; width: 414px; object-fit: cover;"><div class="img-cap">版型</div></div>
+    <div class="img-card" data-anim="" style="opacity: 1; transform: none;"><img src="assets/9-3.jpg" class="" style="aspect-ratio: 3 / 4; max-height: 280px; width: 414px; object-fit: cover;"><div class="img-cap">面料</div></div>
+    <div class="img-card" data-anim="" style="opacity: 1; transform: none;"><img src="assets/9-4.jpg" class="" style="aspect-ratio: 3 / 4; max-height: 280px; width: 414px; object-fit: cover;"><div class="img-cap">试穿</div></div>
+  </div>
+</div></div>
+  <div class="foot"><div>Page 09 · 六年打磨</div><div>Process</div></div>
+</section>
+<!-- P10 -->
+<section class="slide dark">
+  <div class="chrome"><div>第三幕 · 莲俏</div><div>10 / 14</div></div>
+  <div class="frame"><div class="split-2" style="gap:64px">
+  <div class="flex-col" style="gap:32px">
+    <div>
+      <div class="kicker" data-anim="" style="opacity: 1; transform: none;">Lianqiao · 形象是系统工程</div>
+      <h2 class="h-xl" style="font-size: 72px; opacity: 1; transform: none;" data-anim="">衣服只是第一步</h2>
+    </div>
+    <p class="p-body" data-anim="" style="opacity: 1; transform: none;">东方人的整体形象，需要服装、化妆、发型、配饰和姿态的协同。好衣服配上好照片，才算完整的表达。</p>
+    <div class="callout" data-anim="" style="opacity: 1; transform: none;">"为明星设计礼服时，一条礼服上身之后，紧接着就是专业妆发、精准灯光、摄影师的捕捉——这些环节加在一起，才是完整的形象呈现。而这些，普通女性也应该拥有。"<div class="callout-src">— 彭晶</div></div>
+  </div>
+  <div class="img-box" data-anim="" style="opacity: 1; transform: none;"><img src="assets/10-1-2.jpg" class="" style="aspect-ratio: 3 / 4; max-height: 780px; width: 832px; object-fit: cover;"><div class="img-cap">莲俏 · 拍摄现场</div></div>
+</div></div>
+  <div class="foot"><div>Page 10 · 莲俏</div><div>Lianqiao</div></div>
+</section>
+<!-- P11 -->
+<section class="slide dark">
+  <div class="chrome"><div>莲俏 · Two Worlds</div><div>11 / 14</div></div>
+  <div class="frame"><div class="flex-col" style="gap:32px">
+  <div>
+    <div class="kicker" data-anim="" style="opacity: 1; transform: none;">Image · 两个世界</div>
+    <h2 class="h-xl" style="font-size: 80px; opacity: 1; transform: none;" data-anim="">你的形象<br>存在于两个世界</h2>
+  </div>
+  <div class="split-2" style="gap:48px">
+    <div class="world-card" data-anim="" style="opacity: 1; transform: none;">
+      <div class="world-label">第一世界 · 面对面</div>
+      <h3 class="world-title">黑裙 × 形象管理</h3>
+      <p class="world-desc">走进房间的气场、握手时的自信——深鹤的黑裙，让你在线下世界里被记住。</p>
+    </div>
+    <div class="world-card" data-anim="" style="opacity: 1; transform: none;">
+      <div class="world-label">第二世界 · 网络</div>
+      <h3 class="world-title">一张有质感的肖像</h3>
+      <p class="world-desc">在别人见到你本人之前，手机屏幕已经定义了第一印象——莲俏的肖像，让你在线上世界被认真对待。</p>
+    </div>
+  </div>
+  <div class="split-2" style="gap:32px">
+    <div class="img-box" data-anim="" style="opacity: 1; transform: none;"><img src="assets/11-1-2.jpg" class="" style="aspect-ratio: 4 / 3; max-height: 320px; width: 848px; object-fit: cover;"><div class="img-cap" style="color:#b84444">Before · 普通照片</div></div>
+    <div class="img-box" data-anim="" style="opacity: 1; transform: none;"><img src="assets/11-2.jpg" class="" style="aspect-ratio: 4 / 3; max-height: 320px; width: 848px; object-fit: cover;"><div class="img-cap" style="color:#4a8c5c">After · 莲俏肖像</div></div>
+  </div>
+  <p class="p-body" style="text-align: center; opacity: 1; transform: none;" data-anim="">黑裙解决面对面的形象，肖像解决网络上的形象——两个世界，一个都不能少。</p>
+</div></div>
+  <div class="foot"><div>Page 11 · 两个世界</div><div>Offline / Online</div></div>
+</section>
+<!-- P12 -->
+<section class="slide dark">
+  <div class="chrome"><div>第四幕 · 光蕴</div><div>12 / 14</div></div>
+  <div class="frame"><div class="flex-col" style="gap:28px">
+  <div>
+    <div class="kicker" data-anim="" style="opacity: 1; transform: none;">Guangyun · 金绣艺术珠宝</div>
+    <h2 class="h-xl" style="font-size: 72px; opacity: 1; transform: none;" data-anim="">黑裙的留白<br>是留给珠宝的舞台</h2>
+    <p class="p-body" style="margin-top: 8px; opacity: 1; transform: none;" data-anim="">领口干干净净——是给盘扣胸针的。腰线不做装饰——是给金绣腰带的。裙子是画布，珠宝是落款。</p>
+  </div>
+  <div class="grid-4-img">
+    <div class="img-card" data-anim="" style="opacity: 1; transform: none;"><img src="assets/12-1.jpg" class="" style="aspect-ratio: 1 / 1; max-height: 300px; width: 414px; object-fit: cover;"><div class="img-cap">金绣腰带</div></div>
+    <div class="img-card" data-anim="" style="opacity: 1; transform: none;"><img src="assets/12-2.jpg" class="" style="aspect-ratio: 1 / 1; max-height: 300px; width: 414px; object-fit: cover;"><div class="img-cap">珠绣云肩</div></div>
+    <div class="img-card" data-anim="" style="opacity: 1; transform: none;"><img src="assets/12-3.jpg" class="" style="aspect-ratio: 1 / 1; max-height: 300px; width: 414px; object-fit: cover;"><div class="img-cap">耳坠 &amp; 胸针</div></div>
+    <div class="img-card" data-anim="" style="opacity: 1; transform: none;"><img src="assets/12-4.jpg" class="" style="aspect-ratio: 1 / 1; max-height: 300px; width: 414px; object-fit: cover;"><div class="img-cap">完整搭配</div></div>
+  </div>
+  <div class="callout" data-anim="" style="opacity: 1; transform: none;">"衣服和珠宝，分开是两件好东西。合在一起，是另外一件更好的东西。"<div class="callout-src">— 彭晶</div></div>
+</div></div>
+  <div class="foot"><div>Page 12 · 光蕴</div><div>Guangyun</div></div>
+</section>
+<!-- P13 -->
+<section class="slide light">
+  <div class="chrome"><div>品牌体系 · Ecosystem</div><div>13 / 14</div></div>
+  <div class="frame"><div class="flex-col" style="gap:40px;align-items:center;text-align:center">
+  <div>
+    <div class="kicker" data-anim="" style="opacity: 1; transform: none;">Three Brands · 一个逻辑</div>
+    <h2 class="h-xl" style="font-size: 72px; opacity: 1; transform: none;" data-anim="">让一个女性<br>在两个世界里<br>都对自己的形象有底气</h2>
+  </div>
+  <div class="brands-row" style="grid-template-columns:repeat(2,1fr)">
+    <div class="brand-card" data-anim="" style="opacity: 1; transform: none;">
+      <div class="brand-icon">01</div>
+      <div class="brand-name">莲俏</div>
+      <div class="brand-role">肖像摄影 · 形象入口</div>
+      <div class="brand-desc">网络世界的形象入口。一次拍摄，完整体验形象塑造的全部过程。</div>
+    </div>
+    <div class="brand-card" data-anim="" style="opacity: 1; transform: none;">
+      <div class="brand-icon">02</div>
+      <div class="brand-name">深鹤</div>
+      <div class="brand-role">高定黑裙 · 形象核心</div>
+      <div class="brand-desc">面对面的形象核心。一条版型精准的高定黑裙，是形象管理的基石。</div>
+    </div>
+  </div>
+  <p class="p-body" style="opacity: 1; transform: none;" data-anim="">不是两个分开的环节。是入口 → 核心，一条线从头到尾。</p>
+</div></div>
+  <div class="foot"><div>Page 13 · 品牌体系</div><div>Ecosystem</div></div>
+</section>
+<!-- P14 -->
+<section class="slide dark hero">
+  <div class="chrome"><div>致谢 · Thank You</div><div>14 / 14</div></div>
+  <div class="frame"><div class="cover-center">
+  <div class="kicker" data-anim="" style="opacity: 1; transform: none;">Peng Jing · 中国十佳时装设计师</div>
+  <h1 class="h-hero" style="font-size: 120px; opacity: 1; transform: none;" data-anim="">彭晶用二十年<br>只走一条路</h1>
+  <p class="p-lead" style="max-width: 860px; opacity: 1; transform: none;" data-anim="">从帮明星在舞台上发光，到帮每个普通女性在自己的生活里发光。</p>
+  <p class="p-lead" style="max-width: 860px; opacity: 1; transform: none;" data-anim="">她说，衣服不是让你变成别人，是让你更确定地做自己。</p>
+  <div class="meta-row" style="margin-top: 24px; opacity: 1; transform: none;" data-anim=""><span>深鹤 · 莲俏</span></div>
+</div></div>
+  <div class="foot"><div>谢谢观看 · Thank You</div><div>— 2026 —</div></div>
+</section>
+
+</div></div></div>
+
+<div id="nav"></div>
+
+<script>
+(function(){
+  var KEY='guizang-ppt-low-power';
+  var reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var stored=localStorage.getItem(KEY);
+  window.__lowPowerMode=stored==='1'||(stored===null&&reduced);
+  function updateHint(){
+    var hint=document.getElementById('hint');
+    if(hint) hint.textContent='← → 翻页 · B '+(window.__lowPowerMode?'动态':'静态')+' · ESC 索引';
+  }
+  window.__setLowPowerMode=function(on,opts){
+    window.__lowPowerMode=!!on;
+    document.body.classList.toggle('low-power',window.__lowPowerMode);
+    if(opts&&opts.persist!==false) localStorage.setItem(KEY,window.__lowPowerMode?'1':'0');
+    if(window.__lowPowerMode&&document.getAnimations){document.getAnimations().forEach(function(a){a.cancel()})}
+    updateHint();
+    dispatchEvent(new CustomEvent('ppt-low-power-change',{detail:{on:window.__lowPowerMode}}));
+    if(window.__playSlide) window.__playSlide(window.__currentSlideIndex||0);
+  };
+  document.body.classList.toggle('low-power',window.__lowPowerMode);
+  addEventListener('DOMContentLoaded',updateHint,{once:true});
+})();
+</script>
+
+<script>
+// Viewport scaling
+(function(){
+  var stage=document.querySelector('.deck-stage');
+  function fit(){
+    var sw=1920,sh=1080;
+    var vw=window.innerWidth,vh=window.innerHeight;
+    var scale=Math.min(vw/sw,vh/sh);
+    var tx=(vw-sw*scale)/2;
+    var ty=(vh-sh*scale)/2;
+    stage.style.transform='translate('+tx+'px,'+ty+'px) scale('+scale+')';
+  }
+  fit();
+  window.addEventListener('resize',fit);
+  window.addEventListener('orientationchange',function(){setTimeout(fit,100)});
+})();
+</script>
+
+<script>
+var VS='attribute vec2 position;void main(){gl_Position=vec4(position,0.0,1.0);}';
+var FS_DARK='precision highp float;\nuniform vec2 u_resolution;uniform float u_time;uniform vec2 u_mouse;\nvec3 palette(float t,vec3 a,vec3 b,vec3 c,vec3 d){return a+b*cos(6.28318*(c*t+d));}\nvoid main(){\n  vec2 uv=gl_FragCoord.xy/u_resolution.xy;\n  vec2 p=uv-vec2(.5);\n  p.x*=u_resolution.x/u_resolution.y;\n  vec2 m=u_mouse-vec2(.5);\n  m.x*=u_resolution.x/u_resolution.y;\n  vec2 md=p-m;float dl=length(md);\n  p+=normalize(md+vec2(.0001))*exp(-dl*5.)*.03;\n  float t=u_time*.08;\n  vec3 c1=palette(p.x+p.y+t,vec3(.5),vec3(.5),vec3(1.),vec3(.0,.33,.67));\n  vec3 c2=palette(p.x-p.y-t,vec3(.5),vec3(.5),vec3(1.),vec3(.33,.67,1.));\n  vec3 col=mix(c1,c2,.5);\n  float n=sin(p.x*6.+t)*cos(p.y*5.+t*.7);\n  n+=sin(p.x*12.-t*.5)*cos(p.y*9.+t*.4)*.5;\n  n=n*.5+.5;\n  col+=n*.06;\n  vec2 q=vec2(sin(p.x*3.+t)*cos(p.y*3.-t),cos(p.x*4.-t)*sin(p.y*4.+t));\n  float grain=fract(sin(dot(q*100.,vec2(12.9898,78.233)))*43758.5453);\n  col+=grain*.03;\n  float vig=1.-length(uv-.5)*1.3;\n  col*=smoothstep(0.,1.,vig);\n  col=mix(vec3(.04,.04,.05),col,.88);\n  gl_FragColor=vec4(col,1.);\n}';
+
+var mouse={x:.5,y:.5};
+addEventListener('mousemove',function(e){mouse.x=e.clientX/innerWidth;mouse.y=e.clientY/innerHeight});
+
+function bootGL(canvasId,fsSrc){
+  var canvas=document.getElementById(canvasId);
+  var gl=canvas.getContext('webgl',{alpha:false,antialias:true});
+  if(!gl) return function(){return false};
+  function mk(t,s){var sh=gl.createShader(t);gl.shaderSource(sh,s);gl.compileShader(sh);return sh;}
+  var prog=gl.createProgram();
+  gl.attachShader(prog,mk(gl.VERTEX_SHADER,VS));
+  gl.attachShader(prog,mk(gl.FRAGMENT_SHADER,FS_DARK));
+  gl.linkProgram(prog);gl.useProgram(prog);
+  var buf=gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER,buf);
+  gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,1,-1,-1,1,-1,1,1,-1,1,1]),gl.STATIC_DRAW);
+  var pos=gl.getAttribLocation(prog,'position');
+  gl.enableVertexAttribArray(pos);gl.vertexAttribPointer(pos,2,gl.FLOAT,false,0,0);
+  var lRes=gl.getUniformLocation(prog,'u_resolution');
+  var lT=gl.getUniformLocation(prog,'u_time');
+  var lM=gl.getUniformLocation(prog,'u_mouse');
+  function resize(){
+    var d=Math.min(window.devicePixelRatio||1,2);
+    canvas.width=innerWidth*d;canvas.height=innerHeight*d;
+    gl.viewport(0,0,canvas.width,canvas.height);
+  }
+  addEventListener('resize',resize);resize();
+  return function(tSec){
+    gl.uniform2f(lRes,canvas.width,canvas.height);
+    gl.uniform1f(lT,tSec);
+    gl.uniform2f(lM,mouse.x,1-mouse.y);
+    gl.drawArrays(gl.TRIANGLES,0,6);
+    return true;
+  };
+}
+
+var drawDark=null,glRAF=0,glT0=Date.now();
+function startGL(){
+  if(window.__lowPowerMode||glRAF) return;
+  if(!drawDark) drawDark=bootGL('bg-dark',FS_DARK);
+  glT0=Date.now();
+  function loop(){
+    if(window.__lowPowerMode){glRAF=0;return;}
+    var t=(Date.now()-glT0)/1000;
+    drawDark(t);
+    glRAF=requestAnimationFrame(loop);
+  }
+  glRAF=requestAnimationFrame(loop);
+}
+function stopGL(){if(glRAF)cancelAnimationFrame(glRAF);glRAF=0;}
+startGL();
+addEventListener('ppt-low-power-change',function(e){e.detail.on?stopGL():startGL();});
+</script>
+
+<script>
+var deck=document.getElementById('deck');
+var slides=deck.querySelectorAll('.slide');
+var nav=document.getElementById('nav');
+var idx=0,total=slides.length,lock=false;
+deck.style.width=(total*1920)+'px';
+slides.forEach(function(s,i){
+  var b=document.createElement('button');
+  b.className='dot';b.dataset.i=i;b.setAttribute('aria-label','Page '+(i+1));
+  b.onclick=function(){go(i)};
+  nav.appendChild(b);
+});
+function go(n){
+  if(lock) return;
+  idx=Math.max(0,Math.min(total-1,n));
+  window.__currentSlideIndex=idx;
+  deck.style.transform='translateX('+(-idx*1920)+'px)';
+  nav.querySelectorAll('.dot').forEach(function(d,i){d.classList.toggle('active',i===idx)});
+  if(window.__playSlide) setTimeout(function(){window.__playSlide(idx)},450);
+  lock=true;setTimeout(function(){lock=false},700);
+}
+addEventListener('keydown',function(e){
+  if(e.key==='ArrowRight'||e.key==='PageDown'||e.key===' '||e.key==='ArrowDown'){go(idx+1);return;}
+  if(e.key==='ArrowLeft'||e.key==='PageUp'||e.key==='ArrowUp') go(idx-1);
+  if(e.key==='Home') go(0);
+  if(e.key==='End') go(total-1);
+  if(e.key&&e.key.toLowerCase()==='b'&&!e.metaKey&&!e.ctrlKey&&!e.altKey){e.preventDefault();window.__setLowPowerMode(!window.__lowPowerMode);}
+});
+var wheelTO=null,wheelAcc=0;
+addEventListener('wheel',function(e){
+  wheelAcc+=e.deltaY+e.deltaX;
+  if(Math.abs(wheelAcc)>50){go(idx+(wheelAcc>0?1:-1));wheelAcc=0;}
+  clearTimeout(wheelTO);wheelTO=setTimeout(function(){wheelAcc=0},150);
+},{passive:true});
+go(0);
+</script>
+
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<script>lucide.createIcons();</script>
+
+<script type="module">
+var motion;
+try{
+  motion=await import('./motion.min.js');
+}catch(e1){
+  try{
+    motion=await import('https://cdn.jsdelivr.net/npm/motion@11.11.17/+esm');
+  }catch(e2){
+    document.querySelectorAll('[data-anim]').forEach(function(el){el.style.opacity='1';el.style.transform='none'});
+  }
+}
+if(motion){
+  var animate=motion.animate,stagger=motion.stagger;
+  document.body.classList.add('motion-ready');
+  var EASE=[.22,1,.36,1];
+  var allSlides=[].slice.call(document.querySelectorAll('.slide'));
+  function playSlide(i){
+    var slide=allSlides[i];
+    if(!slide) return;
+    if(window.__lowPowerMode){
+      slide.querySelectorAll('[data-anim]').forEach(function(el){el.style.opacity='1';el.style.transform='none'});
+      return;
+    }
+    slide.querySelectorAll('[data-anim]').forEach(function(el){el.style.opacity='';el.style.transform=''});
+    var all=[].slice.call(slide.querySelectorAll('[data-anim]'));
+    if(!all.length) return;
+    if(slide.classList.contains('hero')){
+      animate(all,{opacity:[0,1],y:[14,0]},{duration:.9,delay:stagger(.16,{start:.2}),easing:EASE});
+    }else{
+      animate(all,{opacity:[0,1],y:[12,0]},{duration:.7,delay:stagger(.1,{start:.15}),easing:EASE});
+    }
+  }
+  window.__playSlide=playSlide;
+  playSlide(0);
+}
+</script>
+
+</body></html>
